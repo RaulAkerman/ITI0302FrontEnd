@@ -1,0 +1,26 @@
+stages:
+  - build
+  - deploy
+
+build webproject:
+  stage: build
+  only:
+    refs:
+      - main
+  tags:
+    - main
+  script:
+    - docker build -t frontend .
+
+
+deploy webproject:
+  stage: deploy
+  only:
+    refs:
+      - main
+  tags:
+    - main
+  script:
+    - cd /home/ubuntu/frontend
+    - docker-compose down
+    - docker-compose up -d
